@@ -6,26 +6,42 @@ using UnityEngine;
 public class Rocket : MonoBehaviour {
 
     Rigidbody rigidBody;
+    AudioSource audioSource;
 
 	// Use this for initialization
 	void Start ()
     {
         rigidBody = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        ProcessInput();
-	}
+        Thrust();
+        Rotate();
+    }
 
-    private void ProcessInput()
+    private void Thrust()
     {
         if (Input.GetKey(KeyCode.Space)) // Can Thrust while rotating
         {
-            print("space");
             rigidBody.AddRelativeForce(Vector3.up);
+
+            if (!audioSource.isPlaying) // Only play if the Audio isn't playing
+            {
+                audioSource.Play();
+            }
         }
+        else
+        {
+            audioSource.Stop();
+        }
+    }
+
+    private void Rotate()
+    {
+        rigidBody.freezeRotation = true; // Take manual control of rotation
 
         // Press A or D to rotate Left or Right
         if (Input.GetKey(KeyCode.A))
@@ -36,5 +52,7 @@ public class Rocket : MonoBehaviour {
         {
             transform.Rotate(-Vector3.forward);
         }
+
+        rigidBody.freezeRotation = false; // Resume physics control of rotation
     }
 }
