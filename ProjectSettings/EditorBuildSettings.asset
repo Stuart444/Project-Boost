@@ -12,5 +12,17 @@ EditorBuildSettings:
     path: Assets/Levels/Level 2.unity
     guid: a0c72a58970c206479dbb867c30b171b
   - enabled: 1
-    path: Assets/Levels/Sandbox.unity
-    guid: bdf28e1094d607d4592ccb15458e6d28
+    path: Assets/Levels/Level 3.unity
+    guid: b9f943ddbe9ee274795e14bc75bdff56
+  - enabled: 1
+    path: Assets/Levels/Level 4.unity
+    guid: 3b558eb08b6bbc547b0c184b050e5a21
+  - enabled: 1
+    path: Assets/Levels/Level 5.unity
+    guid: 3d7cdfc1825174544b49dd5798cff5c2
+  - enabled: 1
+    path: Assets/Levels/Level 6.unity
+    guid: d2eb85741dc87644bb09d29c253415c9
+  - enabled: 1
+    path: Assets/Levels/Level 7.unity
+    guid: bc488d296fc552e4785649cf1e017e63
