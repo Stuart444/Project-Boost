@@ -91,7 +91,13 @@ public class Rocket : MonoBehaviour {
 
     private void Restart ()
     {
-        SceneManager.LoadScene(0);
+        /*TODO: Make a difficulty selection later on
+        Easy: Restart from same level when dead
+        Hard: Restart from level 1 when dead
+        Maybe put level stuff into a level manager?*/
+        //SceneManager.LoadScene(0);
+        int levelIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(levelIndex);
     }
 
     private void RespondToThrustInput ()
