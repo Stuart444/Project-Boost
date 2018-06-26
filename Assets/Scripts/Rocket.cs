@@ -91,35 +91,6 @@ public class Rocket : MonoBehaviour {
         }
     }
 
-    private void LoadNextLevel ()
-    {
-        int currentlevelIndex = SceneManager.GetActiveScene().buildIndex;
-        int nextlevelIndex = currentlevelIndex + 1;
-
-        if (nextlevelIndex == SceneManager.sceneCountInBuildSettings)
-        {
-            nextlevelIndex = 0;
-        }
-
-        SceneManager.LoadScene(nextlevelIndex);
-    }
-
-    private void RestartLevel()
-    {
-        /*TODO: Make a difficulty selection later on
-        Easy: Restart from same level when dead
-        Hard: Restart from level 1 when dead
-        Maybe put level stuff into a level manager?*/
-        //SceneManager.LoadScene(0);
-        int levelIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(levelIndex);
-    }
-
-    private void RestartGame()
-    {
-        SceneManager.LoadScene(0);
-    }
-
     #region Movement
     private void RespondToThrustInput ()
     {
