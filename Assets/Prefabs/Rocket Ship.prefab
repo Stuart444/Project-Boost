@@ -711,6 +711,7 @@ MonoBehaviour:
   mainEngineParticles: {fileID: 198495431432079604}
   successParticles: {fileID: 198312572270066928}
   deathParticles: {fileID: 198361679335363208}
+  livesUI: {fileID: 114580978810731114, guid: 8d3d142a65aa69442a7655e2cab781e2, type: 2}
 --- !u!114 &114665543318643008
 MonoBehaviour:
   m_ObjectHideFlags: 1

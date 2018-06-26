@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Rocket : MonoBehaviour {
 
@@ -14,6 +15,9 @@ public class Rocket : MonoBehaviour {
     [SerializeField] ParticleSystem successParticles;
     [SerializeField] ParticleSystem deathParticles;
 
+    [SerializeField] static int lives = 3;
+    [SerializeField] Text livesUI;
+
     Rigidbody rigidBody;
     AudioSource audioSource;
 
@@ -24,6 +28,7 @@ public class Rocket : MonoBehaviour {
     {
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+        livesUI.text = lives.ToString();
 	}
 	
 	// Update is called once per frame
@@ -73,7 +78,17 @@ public class Rocket : MonoBehaviour {
         mainEngineParticles.Stop();
         audioSource.PlayOneShot(death);
         deathParticles.Play();
-        Invoke("Restart", levelLoadDelay);
+        lives--;
+        livesUI.text = lives.ToString();
+        print(lives);
+        if (lives < 0)
+        {
+            Invoke("RestartGame", levelLoadDelay);
+        }
+        else
+        {
+            Invoke("RestartLevel", levelLoadDelay);
+        }
     }
 
     private void LoadNextLevel ()
@@ -89,7 +104,7 @@ public class Rocket : MonoBehaviour {
         SceneManager.LoadScene(nextlevelIndex);
     }
 
-    private void Restart ()
+    private void RestartLevel()
     {
         /*TODO: Make a difficulty selection later on
         Easy: Restart from same level when dead
@@ -100,6 +115,12 @@ public class Rocket : MonoBehaviour {
         SceneManager.LoadScene(levelIndex);
     }
 
+    private void RestartGame()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    #region Movement
     private void RespondToThrustInput ()
     {
         if (Input.GetKey(KeyCode.Space)) // Can Thrust while rotating
@@ -146,4 +167,5 @@ public class Rocket : MonoBehaviour {
             transform.Rotate(-Vector3.forward * rotationSpeed);
         }
     }
+    #endregion
 }
