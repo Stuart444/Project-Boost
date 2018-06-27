@@ -2,12 +2,12 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEditor;
 
 public class Rocket : MonoBehaviour {
 
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float mainThrust = 100f;
-    [SerializeField] float levelLoadDelay = 2f;
     [SerializeField] AudioClip mainEngine;
     [SerializeField] AudioClip success;
     [SerializeField] AudioClip death;
@@ -15,20 +15,17 @@ public class Rocket : MonoBehaviour {
     [SerializeField] ParticleSystem successParticles;
     [SerializeField] ParticleSystem deathParticles;
 
-    [SerializeField] static int lives = 3;
-    [SerializeField] Text livesUI;
-
     Rigidbody rigidBody;
     AudioSource audioSource;
 
     bool isTransitioning = false;
+    [SerializeField] Lives lives;
 
     // Use this for initialization
     void Start ()
     {
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
-        livesUI.text = lives.ToString();
 	}
 	
 	// Update is called once per frame
@@ -68,7 +65,7 @@ public class Rocket : MonoBehaviour {
         audioSource.Stop();
         audioSource.PlayOneShot(success);
         successParticles.Play();
-        Invoke("LoadNextLevel", levelLoadDelay);
+        lives.SuccessLevel();
     }
 
     private void StartDeathSequence()
@@ -78,17 +75,7 @@ public class Rocket : MonoBehaviour {
         mainEngineParticles.Stop();
         audioSource.PlayOneShot(death);
         deathParticles.Play();
-        lives--;
-        livesUI.text = lives.ToString();
-        print(lives);
-        if (lives < 0)
-        {
-            Invoke("RestartGame", levelLoadDelay);
-        }
-        else
-        {
-            Invoke("RestartLevel", levelLoadDelay);
-        }
+        lives.LivesSystem();
     }
 
     #region Movement

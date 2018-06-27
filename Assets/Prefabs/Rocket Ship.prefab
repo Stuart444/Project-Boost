@@ -704,14 +704,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rcsThrust: 300
   mainThrust: 1200
-  levelLoadDelay: 2
   mainEngine: {fileID: 8300000, guid: 60a0291f3714fea4c85ef2915fa918f0, type: 3}
   success: {fileID: 8300000, guid: 9a8d80cdb23c4344cb403c61c7258059, type: 3}
   death: {fileID: 8300000, guid: bbe69dc477f261746a88fb8fe2abe69b, type: 3}
   mainEngineParticles: {fileID: 198495431432079604}
   successParticles: {fileID: 198312572270066928}
   deathParticles: {fileID: 198361679335363208}
-  livesUI: {fileID: 114580978810731114, guid: 8d3d142a65aa69442a7655e2cab781e2, type: 2}
+  lives: {fileID: 114010056182841970, guid: 028e953dc11c3804192651125db95bae, type: 2}
 --- !u!114 &114665543318643008
 MonoBehaviour:
   m_ObjectHideFlags: 1

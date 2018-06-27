@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class Lives : MonoBehaviour {
 
+    [SerializeField] float levelLoadDelay = 2f;
+    [SerializeField] static int lives = 3;
+    [SerializeField] Text livesUI;
+
     private void Awake()
     {
         int numOfCanvas = FindObjectsOfType<Canvas>().Length;
@@ -18,6 +22,11 @@ public class Lives : MonoBehaviour {
         {
             DontDestroyOnLoad(this.gameObject); // Could be done in Start but following Unity Doc example
         }
+    }
+
+    private void Start()
+    {
+        livesUI.text = lives.ToString();
     }
 
     private void LoadNextLevel()
@@ -47,6 +56,26 @@ public class Lives : MonoBehaviour {
     private void RestartGame()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void LivesSystem()
+    {
+        lives--;
+        livesUI.text = lives.ToString();
+        print(lives);
+        if (lives < 0)
+        {
+            Invoke("RestartGame", levelLoadDelay);
+        }
+        else
+        {
+            Invoke("RestartLevel", levelLoadDelay);
+        }
+    }
+
+    public void SuccessLevel()
+    {
+        Invoke("LoadNextLevel", levelLoadDelay);
     }
 
 }
