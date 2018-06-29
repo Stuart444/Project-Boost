@@ -19,14 +19,19 @@ public class Rocket : MonoBehaviour {
     AudioSource audioSource;
 
     bool isTransitioning = false;
-    [SerializeField] Lives lives;
+    [SerializeField] Text lives;
 
     // Use this for initialization
     void Start ()
     {
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
-	}
+        if (!lives)
+        {
+            Text life;
+            life = Instantiate(lives);
+        }
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -59,13 +64,13 @@ public class Rocket : MonoBehaviour {
         }
     }
 
-    private void StartSuccessSequence()
+    public void StartSuccessSequence()
     {
         isTransitioning = true;
         audioSource.Stop();
         audioSource.PlayOneShot(success);
         successParticles.Play();
-        lives.SuccessLevel();
+        SendMessage("SuccessLevel");
     }
 
     private void StartDeathSequence()
@@ -75,7 +80,7 @@ public class Rocket : MonoBehaviour {
         mainEngineParticles.Stop();
         audioSource.PlayOneShot(death);
         deathParticles.Play();
-        lives.LivesSystem();
+        SendMessage("LivesSystem");
     }
 
     #region Movement
