@@ -1,22 +1,15 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class Rocket : MonoBehaviour {
 
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float mainThrust = 100f;
-    [SerializeField] float levelLoadDelay = 2f;
     [SerializeField] AudioClip mainEngine;
     [SerializeField] AudioClip success;
     [SerializeField] AudioClip death;
     [SerializeField] ParticleSystem mainEngineParticles;
     [SerializeField] ParticleSystem successParticles;
     [SerializeField] ParticleSystem deathParticles;
-
-    [SerializeField] static int lives = 3;
-    [SerializeField] Text livesUI;
 
     Rigidbody rigidBody;
     AudioSource audioSource;
@@ -28,8 +21,7 @@ public class Rocket : MonoBehaviour {
     {
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
-        livesUI.text = lives.ToString();
-	}
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -62,13 +54,13 @@ public class Rocket : MonoBehaviour {
         }
     }
 
-    private void StartSuccessSequence()
+    public void StartSuccessSequence()
     {
         isTransitioning = true;
         audioSource.Stop();
         audioSource.PlayOneShot(success);
         successParticles.Play();
-        Invoke("LoadNextLevel", levelLoadDelay);
+        SendMessage("SuccessLevel");
     }
 
     private void StartDeathSequence()
@@ -78,46 +70,7 @@ public class Rocket : MonoBehaviour {
         mainEngineParticles.Stop();
         audioSource.PlayOneShot(death);
         deathParticles.Play();
-        lives--;
-        livesUI.text = lives.ToString();
-        print(lives);
-        if (lives < 0)
-        {
-            Invoke("RestartGame", levelLoadDelay);
-        }
-        else
-        {
-            Invoke("RestartLevel", levelLoadDelay);
-        }
-    }
-
-    private void LoadNextLevel ()
-    {
-        int currentlevelIndex = SceneManager.GetActiveScene().buildIndex;
-        int nextlevelIndex = currentlevelIndex + 1;
-
-        if (nextlevelIndex == SceneManager.sceneCountInBuildSettings)
-        {
-            nextlevelIndex = 0;
-        }
-
-        SceneManager.LoadScene(nextlevelIndex);
-    }
-
-    private void RestartLevel()
-    {
-        /*TODO: Make a difficulty selection later on
-        Easy: Restart from same level when dead
-        Hard: Restart from level 1 when dead
-        Maybe put level stuff into a level manager?*/
-        //SceneManager.LoadScene(0);
-        int levelIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(levelIndex);
-    }
-
-    private void RestartGame()
-    {
-        SceneManager.LoadScene(0);
+        SendMessage("LivesSystem");
     }
 
     #region Movement
