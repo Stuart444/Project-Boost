@@ -1,8 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using UnityEditor;
+﻿using UnityEngine;
 
 public class Rocket : MonoBehaviour {
 
@@ -19,18 +15,12 @@ public class Rocket : MonoBehaviour {
     AudioSource audioSource;
 
     bool isTransitioning = false;
-    [SerializeField] Text lives;
 
     // Use this for initialization
     void Start ()
     {
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
-        if (!lives)
-        {
-            Text life;
-            life = Instantiate(lives);
-        }
     }
 	
 	// Update is called once per frame

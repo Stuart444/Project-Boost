@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -8,10 +6,11 @@ public class Lives : MonoBehaviour {
 
     [SerializeField] float levelLoadDelay = 2f;
     [SerializeField] static int lives = 3;
-    [SerializeField] Text livesUI;
+    Text livesUI;
 
     private void Start()
     {
+        livesUI = GameObject.Find("Lives").GetComponent<Text>();
         livesUI.text = lives.ToString();
     }
 
@@ -52,6 +51,8 @@ public class Lives : MonoBehaviour {
         if (lives < 0)
         {
             Invoke("RestartGame", levelLoadDelay);
+            livesUI.text = "0"; // Prevents -1 from showing on the Lives UI
+            lives = 3; // Sets the Lives back to 3 everytime the game restarts
         }
         else
         {
